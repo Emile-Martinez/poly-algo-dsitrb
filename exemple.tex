@@ -1,0 +1,139 @@
+\documentclass[11pt]{article}
+
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{geometry}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+\DeclareMathOperator{\tour}{Tour}
+\DeclareMathOperator{\shift}{Shift}
+\DeclareMathOperator{\ramsey}{Ramsey}
+
+\tcbuselibrary{theorems}
+
+\definecolor{exemple-title}{RGB}{205,107,21}
+\definecolor{exemple-back}{RGB}{253,248,243}
+\definecolor{exemple-frame}{RGB}{245,225,208}
+
+\definecolor{proof-title}{RGB}{0,116,217}
+\definecolor{proof-back}{RGB}{242,248,253}
+\definecolor{proof-frame}{RGB}{204,227,247}
+
+\definecolor{complexite-title}{RGB}{177,13,201}
+\definecolor{complexite-back}{RGB}{251,243,252}
+\definecolor{complexite-frame}{RGB}{239,207,244}
+
+\definecolor{correction-title}{RGB}{43,154,154}
+\definecolor{correction-back}{RGB}{244,250,250}
+\definecolor{correction-frame}{RGB}{213,235,235}
+
+\definecolor{note-title}{RGB}{155,136,15}
+\definecolor{note-back}{RGB}{250,249,243}
+\definecolor{note-frame}{RGB}{235,231,207}
+
+\definecolor{definition-title}{RGB}{240,18,190}
+\definecolor{definition-back}{RGB}{254,243,252}
+\definecolor{definition-frame}{RGB}{252,208,242}
+
+\definecolor{theorem-title}{RGB}{255,65,54}
+\definecolor{theorem-back}{RGB}{255,246,245}
+\definecolor{theorem-frame}{RGB}{255,217,215}
+
+\definecolor{lemme-title}{RGB}{133,20,75}
+\definecolor{lemme-back}{RGB}{249,243,246}
+\definecolor{lemme-frame}{RGB}{231,208,219}
+
+\tcbset{fonttitle=\bfseries,theorem style=plain,terminator sign={.},boxrule=2pt,boxsep=8pt,left=0pt,right=0pt,top=0pt,bottom=0pt,arc=4pt}
+
+\NewTcbTheorem{ex}{Exemple}{coltitle=exemple-title,colback=exemple-back,colframe=exemple-frame}{ex}
+\newenvironment{exemple}[1][]{\begin{ex}{#1}{}}{\end{ex}}
+\newenvironment{exemple*}[1][]{\begin{ex*}{#1}{}}{\end{ex*}}
+
+\NewTcbTheorem{pr}{Preuve}{coltitle=proof-title,colback=proof-back,colframe=proof-frame}{pr}
+\newenvironment{preuve}[1][]{\begin{pr}{#1}{}}{\end{pr}}
+\newenvironment{preuve*}[1][]{\begin{pr*}{#1}}{\end{pr*}}
+
+\NewTcbTheorem{cx}{Complexité}{coltitle=complexite-title,colback=complexite-back,colframe=complexite-frame}{cx}
+\newenvironment{complexite}[1][]{\begin{cx}{#1}{}}{\end{cx}}
+\newenvironment{complexite*}[1][]{\begin{cx*}{#1}}{\end{cx*}}
+
+\NewTcbTheorem{corr}{Correction}{coltitle=correction-title,colback=correction-back,colframe=correction-frame}{corr}
+\newenvironment{correction}[1][]{\begin{corr}{#1}{}}{\end{corr}}
+\newenvironment{correction*}[1][]{\begin{corr*}{#1}}{\end{corr*}}
+
+\NewTcbTheorem{nt}{Note}{coltitle=note-title,colback=note-back,colframe=note-frame}{note}
+\newenvironment{note}[1][]{\begin{nt}{#1}{}}{\end{nt}}
+\newenvironment{note*}[1][]{\begin{nt*}{#1}}{\end{nt*}}
+
+\NewTcbTheorem{df}{Définition}{coltitle=definition-title,colback=definition-back,colframe=definition-frame}{def}
+\newenvironment{definition}[1][]{\begin{df}{#1}{}}{\end{df}}
+\newenvironment{definition*}[1][]{\begin{df*}{#1}}{\end{df*}}
+
+\NewTcbTheorem{theo}{Théorème}{coltitle=theorem-title,colback=theorem-back,colframe=theorem-frame}{th}
+\newenvironment{theoreme}[1][]{\begin{theo}{#1}{}}{\end{theo}}
+\newenvironment{theoreme*}[1][]{\begin{theo*}{#1}}{\end{theo*}}
+
+\NewTcbTheorem{lm}{Lemme}{coltitle=lemme-title,colback=lemme-back,colframe=lemme-frame}{lm}
+\newenvironment{lemme}[1][]{\begin{lm}{#1}{}}{\end{lm}}
+\newenvironment{lemme*}[1][]{\begin{lm*}{#1}}{\end{lm*}}
+
+
+\newcommand{\dev}[1]{\paragraph{Auteur :} #1 \\}
+
+\begin{document}
+	
+	\dev{Emile Martinez}
+	
+	\begin{definition}
+		Être un grand chanteur, c'est avant tout un art de vivre.
+	\end{definition}
+	
+	\begin{theoreme*}
+		Patrick Sebastien est le plus grand chanteur français vivant.
+	\end{theoreme*}
+	
+	\begin{theoreme}[Les serviettes]
+		\begin{itemize}[label=$\star$]
+	 		\item On fait tourner les serviettes !
+	 		\item comme des petites girouettes
+	 		\item ca fait du vent dans les couettes
+	 	\end{itemize}
+	\end{theoreme}
+	
+	\begin{preuve}
+		C'est bon pour la tête
+	\end{preuve}
+	
+	\begin{lemme}[Grande chanson]
+		\begin{itemize}[label=$\bullet$]
+			\item Pourvu que ça dure
+			\item La belle figure
+			\item Les fêtes à Bayonne
+			\item Les soirs sur la Garonne
+		\end{itemize}
+	\end{lemme}
+	
+	\begin{note}
+		C'est surtout les soirs sur la garonne qui compte, et encore ca dépend où sur la Garonne \dots
+	\end{note}
+	
+	\begin{exemple}
+		Bordeaux c'est nul
+	\end{exemple}
+	
+	\begin{correction}
+		Les parisiens y vont en vacances
+	\end{correction}
+	
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{Pat_Seb.png}
+	\end{center}
+	
+\end{document}

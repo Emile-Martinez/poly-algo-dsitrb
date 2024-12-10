@@ -1,0 +1,158 @@
+\dev{Julien Cocquet}
+
+
+\begin{lemme}
+	\[ \chi(L(G)) \le \log \chi(G) +  \log  \log \chi(G) \]
+\end{lemme}
+
+\begin{preuve}
+	L'idée de la preuve est de définir une fonction injective qui à chaque couleur associe un ensemble de n entiers. Pour cela, il faut et il suffit que le nombre de couleurs soit suffisamment petit devant le nombre d'éléments disponibles pour fabriquer nos ensembles.
+	
+	Considérons 
+	\begin{equation}
+		\begin{array}{l|rcl}
+			\phi & \mathbb{N} & \longrightarrow & \mathbb{N} \\
+			& x & \longmapsto & min\{2n, \binom{2n}{n} \ge x\} \end{array}
+	\end{equation}
+	
+	$\phi(x)$ est le nombre minimum (pair) d'éléments qui réalise la condition énoncée au début de la preuve.
+	
+	Supposons donc que G est k-colorable et trouvons une coloration de L(G). Soit $c$ tel que $\phi(k) = c$ (c est donc pair). Par la remarque précédente, on peut remplacer la couleur de chaque sommet de D par un sous ensemble de taille $\frac{c}{2}$ de $\{1,...,c\}$, tel que 2 sous-ensembles adjacents ont une couleur (ensembliste) différente.
+	
+	On colorie les arêtes de G : si x et y sont coloriés par X et Y (ensembles de taille $\frac{c}{2}$), alors $X \neq Y$ car l'image par une fonction injective d'une coloration propre est une coloration propre. Pour colorier l'arête xy, il suffit de choisir $i \in Y\backslash X$ et de lui assigner cett couleur. 
+	La coloration du Linegraph ainsi définie est propre : si une arête de G est incidente à xy, alors elle aura une couleur dans X, et donc nécessairement différente de i.
+	
+	\textbf{Conclusion} :  $\chi(L(G)) \le \phi(\chi(G))$.
+	
+	Il reste à étudier $\phi$ pour conclure. Montrons (qualitativement) que $\phi(x) \le \log x + \log \log x$:  
+	
+	Par la formule de Stirling, $\binom{2n}{n} \underset{+\infty}{\sim} \frac{2^{2n}}{\sqrt{2n}}$.
+	
+	Donc $\binom{\log x + \log \log x}{\frac{\log x + \log \log x}{2}} \sim \frac{2^{\log x + \log \log x}}{\sqrt{2 \log x + 2 \log \log x}} \sim \frac{x \log x}{\sqrt{2 \log x}} \sim x \sqrt{\log x} \ge x$.
+	
+\end{preuve}
+
+On en déduit l'encadrement (fin) suivant :
+
+\begin{theoreme}
+	$\log \chi(G) \le \chi(L(G)) \le \phi(\chi(G))$
+\end{theoreme}
+
+Interrogation : Pour quelle raison $\chi(G)$ peut-il être grand ?
+
+Une piste naturelle pour le comprendre est de répondre à la question suivante : \textit{Si G et H ont nombre chromatique t, est-ce que l'intersection de G et de H a nombre chromatique t} ?
+
+\subsubsection{De la nécessité de définir l'intersection : détour en théorie des catégories}
+
+Plaçons nous des la catégorie des graphes, dans laquelle les objets sont des graphes et les morphismes sont des homomorphismes de graphe.
+
+\begin{definition}[Homomorphisme de graphe]	Un homomorphisme d'un graphe G vers un graphe H est une fonction $f : V(G) \longrightarrow V(H)$ respectant la condition :
+	\begin{equation*}
+		xy \in E(G) \Longrightarrow f(x)f(y) \in E(H)
+	\end{equation*}
+\end{definition}
+
+Le coloriage a également un sens catégorique ; $\chi(G) = min\{t, \exists f : G \longrightarrow K_t \quad$ homomorphisme$\}$. Une t-coloration définit un homomorphisme, et il existe un homomorphisme seulement s'il y a une t-coloration.
+
+\begin{definition}[Union et "intersection" de graphes]
+	Soient G et H deux graphes.
+	\begin{itemize}
+		\item L'union de G et de H est le plus petit graphe K qui contient G et H, c'est-à-dire que pour tout graphe L tel que $G \longrightarrow L$ et $H \longrightarrow L$, alors $K \longrightarrow L$.
+		\item Le produit catégorique (ou "l'intersection") de G et de H est un graphe $K = G\times H$ tel que $K \longrightarrow G$, $K \longrightarrow H$ et pour tout graphe L tel que $L \longrightarrow G$ et $L \longrightarrow H$, alors $L \longrightarrow K$.
+	\end{itemize}
+\end{definition}
+
+La définition catégorique du produit catégorique permet de définir élémentairement la bonne notion d'intersection de graphes.
+
+\begin{definition}[Produit catégorique de 2 graphes]
+	Soient $G = (V(G),E(G))$ et $H = (V(H),E(H))$ deux graphes. On définit $G \times H$ par $V(G \times H) = V(G) \times V(H)$, et $E(G \times H) = \{$ $((u,v),(w,z)$, $(u,w) \in E(G)$ et $(v,z) \in E(H)$ $\}$.
+\end{definition}
+
+\subsubsection{Une piste à explorer}
+
+On considère pour cette partie des graphes orientés.
+
+Soit $g : \mathbb{N} \longrightarrow \mathbb{N}$ qui vérifie $g(t) = \underset{G,H orientés}{min} \{ \chi(G \times H), \chi(G) = t $ et $ \chi (H) = t \}$.
+
+\begin{theoreme}
+	Soit $\underset{+ \infty}{lim} (g) = + \infty$, soit $g$ est bornée par 4.
+\end{theoreme}
+
+\begin{preuve}[Sketch de preuve]
+	Imaginons que $g$ soit bornée par c. Alors il existe G et H orientés de nombre chromatique arbitrairement grand tels que $\chi(G \times H) \le c$.
+	
+	\underline{Observation 1}: Il existe un entier k fixé tel que $\phi^k(c) = 4$.
+	
+	\underline{Observation 2}: $L(G \times H) = L(G) \times L(H)$.
+	
+	On obtient $\chi(L(G) \times L(H)) = \chi(L(G \times H)) \le \phi(\chi(G \times H))$.
+	Donc $\chi(L^k(G) \times L^k(H)) = \chi(L^k(G \times H)) \le \phi^k(\chi(G \times H)) \le \phi^k(c) = 4$. 
+	
+	Nous avons donc montré que $g(\phi^k(t))$ est bornée par 4,... k étant indépendant de t, on obtient bien le résultat : $g$ est bornée par 4.
+	
+\end{preuve}
+
+
+
+\begin{note}
+	Le meilleur résultat connu à ce jour est une borne améliorée, qui passe de 4 à 3. Il existe un résultat similaire pour les graphes non orientés, pour lequel la borne est 9. 
+\end{note}
+
+
+
+\subsection{Les arguments de N. Linial}
+
+On peut adapter une idée précédente pour colorier un chemin de longueur n.
+
+On se donne un ensemble de couleurs de départ $[1,n^2]$ (voir Breaking Symetry), et on suppose que les noeuds se sont mis d'accord en avance sur une fonction injective $[1,n^2] \longrightarrow \{$Parties à $\frac{k}{2}$ éléments de $[1,k]$\}. Après un round de communication, on peut réduire l'ensemble de couleurs à $[1,\phi (n^2)]$. Pour se faire, chaque noeud interprète sa couleur avec la fonction injective, et choisit une couleur parmi les $\frac{k}{2}$ disponibles dans son ensemble, qui est différente des $\frac{k}{2}$ de son antécédent.
+
+\begin{correction}
+	La preuve est la même que celle de la borne inférieure de $\chi(L(D))$. Le nombre de rounds est le nombre de fois où l'on doit appliquer $\phi$ avant de boucler, donc heuristiquement en $\log^*$. Il suffit d'appliquer la réduction de couleur pour passer de 4 à 3 couleurs.
+\end{correction}
+
+Peut-on améliorer $\log ^*(n)$ ?
+
+Soit un protocole de 3-coloration du chemin orienté de longueur n en k étapes, cherchons une borne inférieure sur k. Au bout de k étapes, x doit décider d'une couleur en connaissant sur k successeurs/k prédécesseurs. Autrement dit, x connaît un mot sur \{$1,...,n^2$\} de longueur 2k + 1.
+
+Le protocole peut être vu comme $P : \{ 1,...,n^2\}^{2k+1} \longrightarrow \{1,2,3\}$. Pour que le protocole soit correct, il doit vérifier la condition suivante : si 2 mots $M$ et $M'$ sont deux mots de taille $2k+1$ tels que $M'$ soit un shift de $M$ (c'est-à-dire que la ième lettre de M' est i+1ème lettre de M.), alors ils doivent être colorés différement.
+
+En particulier, on peut restreindre cette condition aux mots de P croissants (en termes d'identifiants). 
+
+\begin{note}
+	$K_{n^2}$ orienté (voir page 5) est le graphe dont les sommets sont les mots de longueur 1, et dont les arêtes correspondent aux mots de longueur 2.
+	
+	Shift$_{n^2}$ est donc le graphe dont les sommets sont les mots croissants de longueur 2, et dont les arêtes correspondent aux mots de longueur 3.
+	
+	L$^{(2k)}$($K_{n^2}$) est donc le graphe dont les sommets correspondent aux mots de longueur 2k+1.
+\end{note}
+
+Donc P fournit une 3-coloration de L$^{(2k)}$($K_{n^2}$). Or, $\chi(L^{(2k)}(K_{n^2})) \ge \log^{(2k)}(K_{n^2}) = \log^{(2k)}(K_{n^2})$.
+
+En particulier, si $2k < \frac{\log^*(n^2) - 3}{2}$, on a $\chi(L^{(2k)}(K_{n^2})) \ge 3$, ce qui est contradictoire car le protocole donne une 3-coloration de $L^{(2k)}(K_{n^2})$.
+
+\begin{theoreme}
+	Le nombre de rounds est minoré par $\frac{\log^*(n^2) - 3}{2}$.
+\end{theoreme}
+
+\subsection{Colorer des graphes}
+
+Comme pour les chemins (où l'on ne peut 2-colorier), on va tenter de colorer en $\Delta$ (i.e. le degré maximum des sommets) + 1 couleurs.
+
+En réalité, on peut (presque) toujours colorier un graphe G en $\Delta$ couleurs, les seuls contre-exemples à cette règle étant les cycles de longueur immpaire et les cliques.
+
+\begin{definition}
+	On dit que $F \subset 2^{[m]}$ famille d'ensembles est k-cover-free si $\forall X \in F$, $\forall X_1,...X_k$ distincts de X, X n'est pas inclus dans $X_1 \cup...\cup X_k$.
+\end{definition}
+
+\subsubsection{Construire des familles k-cover-free sur un ensemble de base petit}
+
+On se donne un nombre premier p, on considère des polynômes de degré d sur $\mathbb{F}_p[X]$. On observe que 2 polynômes distincts de degré $d$ ont au plus $d+1$ valuers sur lesquels ils coïncident.
+
+Principe de construction : L'ensemble de base qu'on considère est $\mathbb{F}_p \times \mathbb{F}_p$, à un polynôme P de degré d on associe $X_p \subset \mathbb{F}_p^2$, où $X_p = \{(a,P(a)),a\in \mathbb{F}_p\}$. Cette famille est k-cover-free pour $k < \lfloor \frac{p}{d} \rfloor$ par le principe des tiroirs !
+
+\begin{theoreme}
+	\begin{itemize}
+		\item Fait 1 : Pour chaques entiers $x, \Delta$ tels que $x > \delta \ge 2$, il existe une famille $\Delta$-cover-free de x ensembles d'un ensemble de taille $m \le 4(\Delta + 1)^2\log^2(x)$.
+		\item Fait 2 : Pour chaque $x\le (11(\Delta +1))^3$ et $\Delta$, il existe une famille $\Delta$-cover-free de $x$ ensembles d'un ensemble de base de taille $m \le (22(\Delta +1))^2$.d  
+	\end{itemize}
+\end{theoreme}

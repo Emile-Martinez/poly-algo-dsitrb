@@ -1,0 +1,239 @@
+\dev{Greg Depoire}
+
+\section{Intro informelle}
+
+\subsection{Contexte}
+
+\subsubsection{Intervenants}
+
+\begin{itemize}
+	\item Laurent Feuilloley (LIRIS)
+	\item Théo Pierron (LIRIS)
+	\item Stéphan Tomassé (LIP) qui remplace Nicolas Bousquet
+\end{itemize}
+
+Poser plutôt les questions à Laurent Feuilloley et Théo Pierron.
+
+\subsubsection{MCC}
+
+\begin{itemize}
+	\item Examen sur table
+	\item \emph{Scribing notes} : $\text{un cours} \to \text{un scribe} + \text{un comité éditorial}$
+\end{itemize}
+
+\subsubsection{Le modèle étudié}
+
+\begin{itemize}
+	\item Le graphe en entrée est le réseau. Les nœuds sont les unités de calcul et les arêtes sont les liens de communication.
+	\item Chaque nœud commence avec la seule connaissance de lui-même et de ses liens. Il doit terminer avec une partie de la solution.
+	
+	\begin{exemple}[Coloration]
+		Chaque nœud termine avec une couleur différente de ses voisins.
+	\end{exemple}
+	
+	\begin{exemple}[Arbre couvrant]
+		Chaque nœud termine avec un parent (voisin ou lui même si racine) tel que le total forme un arbre.
+	\end{exemple}
+	\item \emph{Breaking symmetry} : dans certains graphes comme les cycles, les nœuds sont équivalents. On donne donc à chaque nœud $x$ un identifiant unique $i(x) \in [n^2] = \{ 1, \dots, n^2 \}$ où $n$ est le nombre de nœuds du graphe.
+\end{itemize}
+
+\subsubsection{Rounds de communication}
+
+Initialement, chaque nœud connaît son identifiant et ses liens. Lors d'un round, les nœuds envoient et reçoivent un message de leurs voisins puis effectuent un calcul. À la fin du dernier round, chaque nœud termine avec sa solution locale.
+
+\subsubsection{Complexité}
+
+La complexité est le nombre de rounds effectués pour calculer une solution. Le temps de calcul est négligé devant les communications.
+
+\subsubsection{Localité}
+
+Après $k$ rounds, un nœud connaît son voisinnage à distance $k$. Pour que l'algorithme soit efficace, il faut donc prendre la décision en utilisant une petite partie locale de l'instance (\og fast = local \fg).
+
+\subsection{Un mauvais cas}
+
+Supposons que l'on veuille effectuer une tâche simple de colorer un chemin de $n$ nœuds.
+
+\begin{center}
+	\begin{tikzpicture}
+		
+	\end{tikzpicture}
+\end{center}
+
+Il n'existe pas d'algorithme distribué qui $2$-colore $P_{n + 3}$ en moins de $n / 2$ rounds.
+
+\begin{preuve}
+	Supposons qu'un tel algorithme existe.
+	
+	L'algorithme colorie $x$ et $y$ sur la connaissance de leur voisinnage à distance $< n / 2$.
+	
+	Ainsi, en l'appliquant sur sur le cycle de longueur $n + 3$ on obtient une $2$-coloration d'un cycle impair ce qui est impossible. L'algorithme n'existe donc pas.
+\end{preuve}
+
+\subsection{3-colorer un chemin}
+
+On suppose maintenant que le réseau est le chemin \emph{orienté} de longueur $n$. Chaque nœud peut toujours communiquer avec ses deux voisins, mais il y a une distinction entre le voisin de gauche et le voisin de droite.
+
+\subsubsection{Algo naïf}
+
+\begin{complexite}
+	$\Theta(n^2)$
+\end{complexite}
+
+\subsubsection{Algo bruteforce}
+
+Il y a $n - 1$ rounds de communication. Chaque nœud se colorie avec la parité de la distance à la racine. On obtient une $2$-coloration.
+
+\begin{complexite}
+	$\Theta(n)$
+\end{complexite}
+
+\subsubsection{Réduction des couleurs}
+
+Si un nœud $x$ a une couleur plus grande que ses voisins, on le recolorie en $1$, $2$ ou $3$ en fonction de ses voisins.
+
+Il existe une méthode en $log^*(n)$.
+
+\subsubsection{Cole-Vishkin}
+
+L'algorithme de Cole-Vishkin permet de réduire une $C$-coloration en une 6-coloration en $\log^* C$ rounds.
+
+\begin{note}
+	$\log^* n = \text{nombre de } \lfloor \log \rfloor \text{ à appliquer pour atteidre } 1$
+	
+	C'est la fonction réciproque de $\tour(n) = \underbrace{2^{2^{.^{.^2}}}}_{n \text{ fois}}$.
+\end{note}
+
+On note $x$ le nœud qui exécute l'algorithme, $y$ son nœud voisin et $c(x)$ la couleur du nœud $x$.
+
+On obtient une $6$-coloration.
+
+\begin{correction}
+	Premièrement, l'invariant \og $c(x) != c(y)$ \fg est vrai au début et est préservé à chaque round donc la coloration retournée est bien propre.
+	
+	Deuxièmement, si toutes les couleurs sont inférieures à $C$ au début d'un round, alors elles sont inférieures à $2 \lceil \log C \rceil$ à la fin du round. On peut prouver par induction qu'au bout de $\log^* n^2$ rounds, on obtient une $6$-coloration.
+\end{correction}
+
+\begin{note}
+	$6$ est un point fixe de $2 \lceil \log \rceil$.
+	
+	\bigskip
+	\begin{center}
+		\begin{tabular}{ |c|c| } 
+			\hline $n$ & $2 \lceil \log n \rceil$ \\ 
+			\hline $9$ & $7$ \\ 
+			\hline $8$ & $6$ \\
+			\hline $7$ & $6$ \\
+			\hline $6$ & $6$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+\end{note}
+
+\begin{complexite}
+	$O(\log^* n)$
+\end{complexite}
+
+\begin{note}
+	Pour les chemins non orientés, on calcule $c(x)$ à partir des couples $(p, b)$ correspondants aux deux voisins.
+\end{note}
+
+Pour $3$-colorier le chemin, on peut à présent appliquer la réduction des couleurs 3 fois.
+
+\subsection{Nombre chromatique et line graph}
+
+\begin{definition}
+	Le nombre chromatique $\chi(G)$ d'un graphe $G$ est le nombre minimal de couleurs nécéssaire à la coloration de $G$.
+\end{definition}
+
+On peut construire des graphes de nombre chromatique arbitrairement grand.
+
+\begin{exemple}
+	La clique $K_n$ vérifie $\chi(K_n) = n$.
+\end{exemple}
+
+Et si on interdit les triangles (3 sommets reliés les uns aux autres) ?
+
+\begin{exemple}[Propositions des élèves]
+\end{exemple}
+
+\begin{exemple}[Mycielski]
+\end{exemple}
+
+\subsubsection{Pour plus tard}
+
+\begin{definition}
+	La \emph{girth} d'un graphe est la longeur d'un plus court cycle du graphe.
+\end{definition}
+
+\begin{note}
+	Si un graphe a pour girth $2k + 2$ alors pour chaque sommet $x$, le graphe des sommets à distance $k$ de $x$ est un arbre.
+\end{note}
+
+\begin{theoreme}[Erdös]
+	Il existe des graphes de grand nombre chromatique et de girth arbitraire.
+\end{theoreme}
+
+\subsubsection[Autre modèle : le shift graph]{Autre modèle : le \emph{shift graph}}
+
+\begin{definition}
+	$\shift_n$ est le graphe orienté dont les nœuds sont les couples $i j$ avec $1 \le i < j \le n$ et les arêtes sont les couples $i j \to j k$.
+\end{definition}
+
+\begin{exemple}[$\shift_4$]
+\end{exemple}
+
+Il n'y a pas de triangle dans les shift graphs.
+
+Colorer les nœuds de $\shift_n$ équivaut à colorer les arêtes de $K_n$.
+
+Colorer les nœuds de $shift_n$ équivaut à colorer les arêtes de $K_n$.
+
+\begin{definition}
+	$\ramsey_k(3)$ est le $n$ minimum tel que toute $k$-coloration des arêtes de $K_n$ contient un triangle monochromatique.
+\end{definition}
+
+\begin{lm}{}{}
+	\[ \ramsey_2(3) = 6 \]
+\end{lm}
+
+\begin{preuve}
+	Il existe une $2$-coloration des arêtes $K_5$ sans triangle monochromatique.
+	
+	Cepandant, une coloration des arêtes de $K_6$ en 2 couleurs contient forcément un triangle monochromatique.
+	
+	Soit un sommet $x$. Il existe une couleur majoritaire $c$ parmi les arêtes de $x$. On considère les voisins correspondants aux arrêtes de cette couleur $c$.
+	
+	Si toutes les arêtes entre eux sont de l'autre couleur alors il un a un triangle monochromatique.
+	
+	Sinon, il existe une arête de couleur $c$ entre eux et il y a aussi un triangle monochromatique.
+\end{preuve}
+
+La notion de \emph{line graph} généralise les shift graphs.
+
+\begin{definition}[Line graph]
+	Soit $G$ un graphe orienté. Le \emph{line graph} de $G$ est le graphe orienté $L(G)$ défini par :
+	
+	\begin{itemize}
+		\item Les sommets sont les arêtes de $G$.
+		\item Les arêtes sont les couples $i j arrow.r j k$ où $i$, $j$ et $k$ sont des sommets de $G$.
+	\end{itemize}
+\end{definition}
+
+\begin{exemple}
+	\[ \shift_n = L(\overrightarrow{K_n}) \] où $\overrightarrow{K_n}$ est le graphe à $n$ sommets dans lequel $i \to j$ ssi. $i < j$.
+\end{exemple}
+
+On veut comparer $\chi(L(G))$ à $\chi(G)$.
+
+\begin{lemme}
+	\[ \log \chi(G) \le \chi(L(G)) \]
+\end{lemme}
+
+\begin{preuve}
+	Considérons une $k$-coloration de $L(G)$. On transforme cette coloration en une coloration de $G$. Si $x$ est un sommet de $G$ alors on pose \[ c'(x) = \{ c(x y) | x \to y \} \]
+	
+	$c$ est propre car si $x \to y$ alors $c(x y) \in c'(x)$ mais $c(x y) \not\in c'(y)$. En effet, si il existait un $z$ tel que $c(x y) = c(y z) \in c'(y)$, alors alors la coloration de $L(G)$ ne serait pas propre car $x y \to y z$ dans $L(G)$.
+	
+	La coloration de $G$ obtenue est une $2^k$ coloration donc $\chi(G) \le 2^{\chi(L(G))}$.
+\end{preuve}
+

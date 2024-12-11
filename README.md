@@ -37,15 +37,7 @@ Si vous voulez rajouter des environnements, sentez vous libre de le faire dans l
 
 # Pour les néophytes de l'informatique
 
-Sous linux, dans un terminal, la ou vous voulez que soit votre fichier, on importe ce dossier avec 
-`git clone https://github.com/Emile-Martinez/poly-algo-dsitrb`
-
-on récupère les nouvelles modifications avec `git pull`
-
-On ajoute ces documents avec
-`git add *`(ajoute tous les fichiers au git)
-`git commit -am "nom de la modification"` (dis a git quelles modifications (ici toutes) on veut envoyer)
-`git push` (pour tout envoyer).
+Bon, à court terme, envoyez moi soit votre clé SSH que je l'ajoute au git, soit envoyez moi directement les fichiers. Mais cette organisation la spécifiquement peu évoluée
 
 Pour l'organisation en fichier, je pense que la plupart des éditeurs latex compile le bon fichier. (Moi j'utilise texstudio, et du moment que le fichier poly.tex est ouvert dans un des onglets, essayer de compiler depuis un autre fichier qu'appelle poly.tex fonctionne)
 

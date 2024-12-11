@@ -41,6 +41,8 @@ Bon, à court terme, envoyez moi soit votre clé SSH que je l'ajoute au git, soi
 
 Pour l'organisation en fichier, je pense que la plupart des éditeurs latex compile le bon fichier. (Moi j'utilise texstudio, et du moment que le fichier poly.tex est ouvert dans un des onglets, essayer de compiler depuis un autre fichier qu'appelle poly.tex fonctionne)
 
+Si jamais ca fonctionne mal, vous pouvez écrire votre leçon dans le fichier example.tex, qui du coup vivra seul mais c'est la vie, et je la mettrai la où il faut plus tard.
+
 # Remarques
 
 Si vous avez la moindre plainte, remarque, suggestion, hésitez pas.

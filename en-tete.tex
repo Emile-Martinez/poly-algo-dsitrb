@@ -78,9 +78,16 @@
 \newenvironment{theoreme}[1][]{\begin{theo}{#1}{}}{\end{theo}}
 \newenvironment{theoreme*}[1][]{\begin{theo*}{#1}}{\end{theo*}}
 
+\NewTcbTheorem{prop}{Proposition}{coltitle=theorem-title,colback=theorem-back,colframe=theorem-frame}{prop}
+\newenvironment{proposition}[1][]{\begin{prop}{#1}{}}{\end{prop}}
+\newenvironment{proposition*}[1][]{\begin{prop*}{#1}}{\end{prop*}}
+
 \NewTcbTheorem{lm}{Lemme}{coltitle=lemme-title,colback=lemme-back,colframe=lemme-frame}{lm}
 \newenvironment{lemme}[1][]{\begin{lm}{#1}{}}{\end{lm}}
 \newenvironment{lemme*}[1][]{\begin{lm*}{#1}}{\end{lm*}}
 
+\NewTcbTheorem{coro}{Corollaire}{coltitle=lemme-title,colback=lemme-back,colframe=lemme-frame}{coro}
+\newenvironment{corolaire}[1][]{\begin{coro}{#1}{}}{\end{coro}}
+\newenvironment{corolaire*}[1][]{\begin{coro*}{#1}}{\end{coro*}}
 
 \newcommand{\dev}[1]{\paragraph{Auteur :} #1 \\}
